@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 
+// simple medill ware
+app.use(express.json());
+
 const courses = [
   { id: 1, name: "course1" },
   { id: 2, name: "course2" },
@@ -9,9 +12,18 @@ const courses = [
 app.get("/", (reg, res) => {
   res.send("Hello World");
 });
-
+// handling get
 app.get("/api/courses", (req, res) => {
   res.send(courses);
+});
+// handling post
+app.post("/api/courses", (req, res) => {
+  const course = {
+    id: courses.length + 1,
+    name: req.body.name,
+  };
+  courses.push(course);
+  res.send(course);
 });
 
 app.get("/api/courses/:id", (req, res) => {
