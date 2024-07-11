@@ -1,4 +1,5 @@
 const express = require("express");
+const Joi = require("joi");
 const app = express();
 
 // simple medill ware
@@ -9,15 +10,28 @@ const courses = [
   { id: 2, name: "course2" },
   { id: 3, name: "course3" },
 ];
+
 app.get("/", (reg, res) => {
   res.send("Hello World");
 });
+
 // handling get
 app.get("/api/courses", (req, res) => {
   res.send(courses);
 });
 // handling post
 app.post("/api/courses", (req, res) => {
+  // validation with express
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+  const result = Joi.validate(req.body, schema);
+  if (result.error) {
+    //bad request
+    res.status(400).send(result.error.details[0].message);
+    return;
+  }
+
   const course = {
     id: courses.length + 1,
     name: req.body.name,
