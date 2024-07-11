@@ -62,6 +62,20 @@ function validateCourse(course) {
   return Joi.valid(course, schema);
 }
 
+// handling delete
+app.delete("/api/courses/:id", (req, res) => {
+  // Look up the course
+  // If not existaing  ,return 404 -resources not found
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course) res.status(404).send("The courses with given ID was not found");
+
+  //Delete
+  const index = courses.indexOf(course);
+  courses.splice(course, 1);
+  //Return  the same courses
+  res.send(course);
+});
+
 app.get("/api/courses/:id", (req, res) => {
   const course = courses.find((c) => c.id === parseInt(req.params.id));
   if (!course) res.status(404).send("The courses with given ID was not found");
