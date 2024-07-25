@@ -1,4 +1,5 @@
 const express = require("express");
+
 const Joi = require("joi");
 const app = express();
 
@@ -7,13 +8,10 @@ app.use(express.json());
 
 // custom medill ware
 app.use(function (req, res, next) {
-  console.log("Logging ...");
-  next();
-});
-app.use(function (req, res, next) {
   console.log("Authentiction...");
   next();
 });
+
 const courses = [
   { id: 1, name: "course1" },
   { id: 2, name: "course2" },
