@@ -5,6 +5,15 @@ const app = express();
 // simple medill ware
 app.use(express.json());
 
+// custom medill ware
+app.use(function (req, res, next) {
+  console.log("Logging ...");
+  next();
+});
+app.use(function (req, res, next) {
+  console.log("Authentiction...");
+  next();
+});
 const courses = [
   { id: 1, name: "course1" },
   { id: 2, name: "course2" },
